@@ -24,7 +24,7 @@ Play Codenames online with friends, featuring an AI Spymaster powered by Ollama!
 
 ```bash
 # Start Supabase + Ollama
-docker-compose up -d
+docker compose up -d
 
 # Pull the AI model (first time only)
 docker exec codenames-ollama ollama pull llama3
