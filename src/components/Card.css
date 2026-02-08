@@ -1,0 +1,95 @@
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.card:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.card:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Hidden state (default for players) */
+.card--hidden {
+  background: linear-gradient(145deg, #f5f0e6 0%, #e8e0d0 100%);
+  color: #2d2a26;
+  border: 2px solid #d4cfc2;
+}
+
+/* Team colors */
+.card--red {
+  background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: 2px solid #b91c1c;
+}
+
+.card--blue {
+  background: linear-gradient(145deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: 2px solid #1d4ed8;
+}
+
+.card--neutral {
+  background: linear-gradient(145deg, #a8a29e 0%, #78716c 100%);
+  color: white;
+  border: 2px solid #57534e;
+}
+
+.card--assassin {
+  background: linear-gradient(145deg, #1f1f1f 0%, #0a0a0a 100%);
+  color: #ff4444;
+  border: 2px solid #3f3f3f;
+}
+
+/* Revealed state */
+.card--revealed {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.card--revealed::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Disabled state */
+.card--disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Word styling */
+.card__word {
+  display: block;
+  padding: 0.5em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+/* Spymaster team indicator */
+.card__team-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  font-size: 0.65rem;
+  opacity: 0.7;
+  font-weight: 700;
+}

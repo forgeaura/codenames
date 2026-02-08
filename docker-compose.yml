@@ -1,0 +1,87 @@
+services:
+  # Supabase Database
+  db:
+    image: supabase/postgres:15.1.0.117
+    container_name: codenames-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: codenames
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./supabase/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Supabase Studio (optional - for DB management)
+  studio:
+    image: supabase/studio:20240101
+    container_name: codenames-studio
+    ports:
+      - "3000:3000"
+    environment:
+      STUDIO_PG_META_URL: http://meta:8080
+      POSTGRES_PASSWORD: postgres
+      SUPABASE_URL: http://kong:8000
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+    depends_on:
+      - db
+
+  # Supabase Realtime
+  realtime:
+    image: supabase/realtime:v2.25.35
+    container_name: codenames-realtime
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: codenames
+      PORT: 4000
+      JWT_SECRET: super-secret-jwt-token-with-at-least-32-characters
+      REPLICATION_MODE: RLS
+      SECURE_CHANNELS: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Supabase REST API (PostgREST)
+  rest:
+    image: postgrest/postgrest:v12.0.2
+    container_name: codenames-rest
+    ports:
+      - "3001:3000"
+    environment:
+      PGRST_DB_URI: postgres://postgres:postgres@db:5432/codenames
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: super-secret-jwt-token-with-at-least-32-characters
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Ollama AI
+  ollama:
+    image: ollama/ollama:latest
+    container_name: codenames-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  db-data:
+  ollama-data:

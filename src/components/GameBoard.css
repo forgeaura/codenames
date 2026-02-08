@@ -1,0 +1,272 @@
+.game-board {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    min-height: 100vh;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.game-title {
+    text-align: center;
+}
+
+.game-title h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    background: linear-gradient(135deg, #fff 0%, #a0aec0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.ai-badge {
+    font-size: 0.85rem;
+    color: #a0aec0;
+    margin: 0.25rem 0 0;
+}
+
+/* Team scores */
+.team-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.team-score--red {
+    background: rgba(239, 68, 68, 0.2);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+.team-score--blue {
+    background: rgba(59, 130, 246, 0.2);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.team-score--active {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px currentColor;
+}
+
+.team-score--red.team-score--active {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
+
+.team-score--blue.team-score--active {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.team-score__label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+}
+
+.team-score__count {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.team-score--red .team-score__count {
+    color: #ef4444;
+}
+
+.team-score--blue .team-score__count {
+    color: #3b82f6;
+}
+
+/* Winner banner */
+.winner-banner {
+    text-align: center;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    animation: pulse 2s infinite;
+}
+
+.winner-banner--red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.winner-banner--blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Clue section */
+.clue-section {
+    margin-bottom: 1.5rem;
+}
+
+.clue-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.clue-display--red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(220, 38, 38, 0.3) 100%);
+    border: 2px solid #ef4444;
+}
+
+.clue-display--blue {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.3) 100%);
+    border: 2px solid #3b82f6;
+}
+
+.clue-word {
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.clue-count {
+    font-size: 2.5rem;
+    opacity: 0.9;
+}
+
+.guesses-left {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.clue-placeholder {
+    text-align: center;
+    padding: 1rem;
+    color: #a0aec0;
+    font-size: 1.1rem;
+}
+
+.generating {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Board grid */
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Controls */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.control-btn--spymaster {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-btn--spymaster[data-active="true"] {
+    background: rgba(168, 85, 247, 0.3);
+    border-color: #a855f7;
+}
+
+.control-btn--clue {
+    color: white;
+}
+
+.control-btn--red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.control-btn--blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.control-btn--end {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .game-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .board-grid {
+        gap: 0.4rem;
+    }
+
+    .clue-word {
+        font-size: 1.5rem;
+    }
+
+    .clue-count {
+        font-size: 1.75rem;
+    }
+}
